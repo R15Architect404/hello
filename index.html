@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1-crypto-js.js"></script>
+</head>
+<body>
+    <h1>Login to Access Your Database</h1>
+    <form id="login-form">
+        <label for="password">Enter Password: </label>
+        <input type="password" id="password" name="password" required>
+        <button type="submit">Login</button>
+    </form>
+
+    <div id="error-message" style="color: red; display: none;">
+        Invalid password, please try again.
+    </div>
+
+    <script>
+        const secretKey = "mySecretKey"; // Your encryption key (keep it secure!)
+
+        document.getElementById('login-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Get the password entered by the user
+            const enteredPassword = document.getElementById('password').value;
+
+            // Encrypt the password using AES
+            const encryptedPassword = CryptoJS.AES.encrypt(enteredPassword, secretKey).toString();
+
+            console.log("Encrypted Password: ", encryptedPassword);
+
+            // You can now send this encrypted password to your backend for validation
+
+            // For this example, just simulate successful or failed login
+            if (encryptedPassword === "yourEncryptedPasswordHere") {
+                // Successful login logic
+                window.location.href = "database.html"; // Redirect to your database page
+            } else {
+                // Show error message if passwords don't match
+                document.getElementById('error-message').style.display = "block";
+            }
+        });
+    </script>
+</body>
+</html>
